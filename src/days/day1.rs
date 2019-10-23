@@ -5,7 +5,7 @@ use std::collections::HashSet;
 use crate::Result;
 
 pub fn part1() -> Result<i64> {
-    let file = File::open("data/input.txt")?;
+    let file = File::open("data/day1_input.txt")?;
     let reader = BufReader::new(file);
 
     let mut freq = 0;
@@ -19,7 +19,7 @@ pub fn part1() -> Result<i64> {
 }
 
 pub fn part2() -> Result<i64> {
-    let file = File::open("data/input.txt")?;
+    let file = File::open("data/day1_input.txt")?;
     let reader = BufReader::new(file);
 
     let mut freqs = HashSet::new();
