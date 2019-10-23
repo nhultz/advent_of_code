@@ -41,6 +41,7 @@ fn run(day: Option<&str>, part: Option<&str>) -> Result<i64> {
     match (day, part) {
         (1, 1) => days::day1::part1(),
         (1, 2) => days::day1::part2(),
+        (2, 1) => days::day2::part1(),
         (_, _) => Err(AdventError::NotImplemented(day, part)),
     }
 }
