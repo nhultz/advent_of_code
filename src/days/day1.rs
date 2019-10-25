@@ -4,7 +4,7 @@ use std::collections::HashSet;
 
 use crate::Result;
 
-pub fn part1() -> Result<i64> {
+pub fn part1() -> Result<String> {
     let file = File::open("data/day1_input.txt")?;
     let reader = BufReader::new(file);
 
@@ -15,10 +15,10 @@ pub fn part1() -> Result<i64> {
         freq = freq + val;
     }
 
-    Ok(freq)
+    Ok(freq.to_string())
 }
 
-pub fn part2() -> Result<i64> {
+pub fn part2() -> Result<String> {
     let file = File::open("data/day1_input.txt")?;
     let reader = BufReader::new(file);
 
@@ -35,7 +35,7 @@ pub fn part2() -> Result<i64> {
         for num in &numbers {
             freq = freq + num;
             if freqs.contains(&freq) {
-                return Ok(freq)
+                return Ok(freq.to_string())
             } else {
                 freqs.insert(freq);
             }

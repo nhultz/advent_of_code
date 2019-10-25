@@ -1,10 +1,12 @@
-use std::fs::File;
-use std::io::{BufReader, BufRead};
 use std::collections::HashMap;
+use std::fs::File;
+use std::io::{BufRead, BufReader};
 
-use crate::Result;
+use itertools::Itertools;
 
-pub fn part1() -> Result<i64> {
+use crate::{Result, AdventError};
+
+pub fn part1() -> Result<String> {
     let file = File::open("data/day2_input.txt")?;
     let reader = BufReader::new(file);
 
@@ -22,7 +24,30 @@ pub fn part1() -> Result<i64> {
         }
     }
 
-    Ok(num_two * num_three)
+    let checksum = num_two * num_three;
+    Ok(checksum.to_string())
+}
+
+pub fn part2() -> Result<String> {
+    let file = File::open("data/day2_input.txt")?;
+    let reader = BufReader::new(file);
+
+    let lines: Vec<String> = reader.lines().flat_map(|line| line).collect();
+    let lines_clone = lines.clone();
+
+    let correct_boxes = lines.into_iter()
+        .cartesian_product(lines_clone.into_iter())
+        .filter(|product| check_one_char_difference(&product.0, &product.1))
+        .nth(1)
+        .ok_or(AdventError::UnexpectedError("No matching boxes found.".into()))?;
+
+    let mut answer = String::new();
+    for (f, s) in correct_boxes.0.chars().zip(correct_boxes.1.chars()) {
+        if f == s {
+            answer.push(f);
+        }
+    }
+    Ok(answer)
 }
 
 fn has_n_characters(n: u8, s: &str) -> bool {
@@ -34,6 +59,19 @@ fn has_n_characters(n: u8, s: &str) -> bool {
     }
 
     characters.values().any(|val| *val == n)
+}
+
+fn check_one_char_difference(first: &str, second: &str) -> bool {
+    let mut different_characters = 0;
+
+    for (f, s) in first.chars().zip(second.chars()) {
+        if f != s {
+            different_characters += 1;
+        }
+    }
+
+    // We only want a difference of 1 character
+    different_characters == 1
 }
 
 #[cfg(test)]
@@ -60,5 +98,12 @@ mod tests {
         assert_eq!(has_n_characters(3, "aabcdd"), false);
         assert_eq!(has_n_characters(3, "abcdee"), false);
         assert_eq!(has_n_characters(3, "ababab"), true);
+    }
+
+    #[test]
+    fn test_one_char_difference() {
+        assert_eq!(check_one_char_difference("abcde", "fghij"), false);
+        assert_eq!(check_one_char_difference("fghij", "fguij"), true);
+        assert_eq!(check_one_char_difference("abcde", "axcye"), false);
     }
 }

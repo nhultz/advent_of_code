@@ -29,7 +29,7 @@ fn main() {
     }
 }
 
-fn run(day: Option<&str>, part: Option<&str>) -> Result<i64> {
+fn run(day: Option<&str>, part: Option<&str>) -> Result<String> {
     let day: u32 = day
         .ok_or(AdventError::MissingArgument("day".to_owned()))?
         .parse()?;
@@ -42,6 +42,7 @@ fn run(day: Option<&str>, part: Option<&str>) -> Result<i64> {
         (1, 1) => days::day1::part1(),
         (1, 2) => days::day1::part2(),
         (2, 1) => days::day2::part1(),
+        (2, 2) => days::day2::part2(),
         (_, _) => Err(AdventError::NotImplemented(day, part)),
     }
 }
