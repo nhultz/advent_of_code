@@ -9,8 +9,9 @@ pub type Result<T> = std::result::Result<T, AdventError>;
 pub enum AdventError {
     MissingArgument(String),
     NotImplemented(u32, u32),
+    UnexpectedError(String),
     Io(std::io::Error),
-    Parse(std::num::ParseIntError)
+    Parse(std::num::ParseIntError),
 }
 
 impl fmt::Display for AdventError {
@@ -18,6 +19,7 @@ impl fmt::Display for AdventError {
         match *self {
             Self::MissingArgument(ref s) => write!(f, "'{}' is a required argument.", s),
             Self::NotImplemented(d, p) => write!(f, "Day: {}, Part: {} not implemented yet.", d, p),
+            Self::UnexpectedError(ref s) => write!(f, "{}", s),
             Self::Io(ref e) => e.fmt(f),
             Self::Parse(ref e) => e.fmt(f),
         }
@@ -29,6 +31,7 @@ impl error::Error for AdventError {
         match *self {
             Self::MissingArgument(_) => None,
             Self::NotImplemented(_, _) => None,
+            Self::UnexpectedError(_) => None,
             Self::Io(ref e) => Some(e),
             Self::Parse(ref e) => Some(e),
         }
