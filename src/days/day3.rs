@@ -4,8 +4,6 @@ use std::io::{BufRead, BufReader};
 
 use crate::Result;
 
-
-
 #[derive(Debug)]
 struct Claim {
     id: u32,
@@ -30,7 +28,13 @@ impl Claim {
         let width: u32 = size_parts[0].parse()?;
         let height: u32 = size_parts[1].parse()?;
 
-        Ok(Claim {id, left, top, width, height})
+        Ok(Claim {
+            id,
+            left,
+            top,
+            width,
+            height,
+        })
     }
 
     fn points(&self) -> Vec<(u32, u32)> {
@@ -56,13 +60,15 @@ pub fn part1() -> Result<String> {
         let claim = Claim::from(line)?;
 
         for point in claim.points() {
-            fabric_claims.entry(point)
+            fabric_claims
+                .entry(point)
                 .or_insert_with(Vec::new)
                 .push(claim.id);
         }
     }
 
-    let answer = fabric_claims.values()
+    let answer = fabric_claims
+        .values()
         .filter(|claims| claims.len() > 1)
         .count();
 
@@ -75,18 +81,34 @@ mod tests {
 
     #[test]
     fn test_points() {
-        let claim = Claim{
+        let claim = Claim {
             id: 1,
             left: 1,
             top: 3,
             height: 4,
-            width: 4
+            width: 4,
         };
 
-        assert_eq!(claim.points(), vec![
-            (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4),
-            (2, 5), (2, 6), (3, 3), (3, 4), (3, 5), (3, 6),
-            (4, 3), (4, 4), (4, 5), (4, 6)]
+        assert_eq!(
+            claim.points(),
+            vec![
+                (1, 3),
+                (1, 4),
+                (1, 5),
+                (1, 6),
+                (2, 3),
+                (2, 4),
+                (2, 5),
+                (2, 6),
+                (3, 3),
+                (3, 4),
+                (3, 5),
+                (3, 6),
+                (4, 3),
+                (4, 4),
+                (4, 5),
+                (4, 6)
+            ]
         );
     }
 }

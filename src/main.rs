@@ -1,23 +1,27 @@
-use clap::{Arg, App};
+use clap::{App, Arg};
 
-use advent_solutions::{Result, AdventError};
 use advent_solutions::days;
+use advent_solutions::{AdventError, Result};
 
 fn main() {
     let matches = App::new("AdventOfCode2018")
         .version("1.0.0")
         .author("Nick Hultz <nhultz328@gmail.com>")
         .about("Advent of Code 2018 Solutions")
-        .arg(Arg::with_name("day")
-            .short("d")
-            .long("day")
-            .takes_value(true)
-            .help("The challenge day to run."))
-        .arg(Arg::with_name("part")
-            .short("p")
-            .long("part")
-            .takes_value(true)
-            .help("The part to run."))
+        .arg(
+            Arg::with_name("day")
+                .short("d")
+                .long("day")
+                .takes_value(true)
+                .help("The challenge day to run."),
+        )
+        .arg(
+            Arg::with_name("part")
+                .short("p")
+                .long("part")
+                .takes_value(true)
+                .help("The part to run."),
+        )
         .get_matches();
 
     let day = matches.value_of("day");
@@ -25,7 +29,7 @@ fn main() {
 
     match run(day, part) {
         Ok(v) => println!("Answer: {}", v),
-        Err(e) => eprintln!("Error: {}", e)
+        Err(e) => eprintln!("Error: {}", e),
     }
 }
 
