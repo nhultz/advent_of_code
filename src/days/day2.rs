@@ -4,7 +4,7 @@ use std::io::{BufRead, BufReader};
 
 use itertools::Itertools;
 
-use crate::{Result, AdventError};
+use crate::{AdventError, Result};
 
 pub fn part1() -> Result<String> {
     let file = File::open("data/day2_input.txt")?;
@@ -35,11 +35,14 @@ pub fn part2() -> Result<String> {
     let lines: Vec<String> = reader.lines().flat_map(|line| line).collect();
     let lines_clone = lines.clone();
 
-    let correct_boxes = lines.into_iter()
+    let correct_boxes = lines
+        .into_iter()
         .cartesian_product(lines_clone.into_iter())
         .filter(|product| check_one_char_difference(&product.0, &product.1))
         .nth(1)
-        .ok_or(AdventError::UnexpectedError("No matching boxes found.".into()))?;
+        .ok_or(AdventError::UnexpectedError(
+            "No matching boxes found.".into(),
+        ))?;
 
     let mut answer = String::new();
     for (f, s) in correct_boxes.0.chars().zip(correct_boxes.1.chars()) {
