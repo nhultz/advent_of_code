@@ -48,6 +48,7 @@ fn run(day: Option<&str>, part: Option<&str>) -> Result<String> {
         (2, 1) => days::day2::part1(),
         (2, 2) => days::day2::part2(),
         (3, 1) => days::day3::part1(),
+        (3, 2) => days::day3::part2(),
         (_, _) => Err(AdventError::NotImplemented(day, part)),
     }
 }

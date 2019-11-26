@@ -1,10 +1,10 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 use crate::Result;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct Claim {
     id: u32,
     left: u32,
@@ -37,12 +37,12 @@ impl Claim {
         })
     }
 
-    fn points(&self) -> Vec<(u32, u32)> {
-        let mut all_points = vec![];
+    fn points(&self) -> HashSet<(u32, u32)> {
+        let mut all_points = HashSet::new();
 
         for x in 0..self.width {
             for y in 0..self.height {
-                all_points.push((self.left + x, self.top + y))
+                all_points.insert((self.left + x, self.top + y));
             }
         }
         return all_points;
@@ -50,15 +50,9 @@ impl Claim {
 }
 
 pub fn part1() -> Result<String> {
-    let file = File::open("data/day3_input.txt")?;
-    let reader = BufReader::new(file);
-
     let mut fabric_claims = HashMap::new();
 
-    for line in reader.lines() {
-        let line = line?;
-        let claim = Claim::from(line)?;
-
+    for claim in claims()? {
         for point in claim.points() {
             fabric_claims
                 .entry(point)
@@ -73,6 +67,48 @@ pub fn part1() -> Result<String> {
         .count();
 
     Ok(answer.to_string())
+}
+
+pub fn part2() -> Result<String> {
+    let all_claims = claims()?;
+
+    let mut fabric_claims = HashMap::new();
+    for claim in &all_claims {
+        for point in claim.points() {
+            fabric_claims
+                .entry(point)
+                .or_insert_with(Vec::new)
+                .push(claim.id);
+        }
+    }
+
+    let mut overlapping_claims = HashSet::new();
+    for (_, ids) in &fabric_claims {
+        if ids.len() > 1 {
+            for id in ids {
+                overlapping_claims.insert(id);
+            }
+        }
+    }
+
+    let leftover: Vec<_> = all_claims
+        .iter()
+        .filter(|c| !overlapping_claims.contains(&c.id))
+        .collect();
+
+    let claim_id = &leftover[0].id;
+    Ok(claim_id.to_string())
+}
+
+fn claims() -> Result<Vec<Claim>> {
+    let file = File::open("data/day3_input.txt")?;
+    let reader = BufReader::new(file);
+
+    return reader
+        .lines()
+        .flat_map(|line| line)
+        .map(|line| Claim::from(line))
+        .collect();
 }
 
 #[cfg(test)]
@@ -91,7 +127,7 @@ mod tests {
 
         assert_eq!(
             claim.points(),
-            vec![
+            [
                 (1, 3),
                 (1, 4),
                 (1, 5),
@@ -109,6 +145,9 @@ mod tests {
                 (4, 5),
                 (4, 6)
             ]
+            .iter()
+            .cloned()
+            .collect()
         );
     }
 }
