@@ -35,11 +35,11 @@ fn main() {
 
 fn run(day: Option<&str>, part: Option<&str>) -> Result<String> {
     let day: u32 = day
-        .ok_or(AdventError::MissingArgument("day".to_owned()))?
+        .ok_or(AdventError::MissingArgument("day".into()))?
         .parse()?;
 
     let part: u32 = part
-        .ok_or(AdventError::MissingArgument("part".to_owned()))?
+        .ok_or(AdventError::MissingArgument("part".into()))?
         .parse()?;
 
     match (day, part) {
@@ -49,6 +49,8 @@ fn run(day: Option<&str>, part: Option<&str>) -> Result<String> {
         (2, 2) => days::day2::part2(),
         (3, 1) => days::day3::part1(),
         (3, 2) => days::day3::part2(),
+        (4, 1) => days::day4::part1(),
+        (4, 2) => days::day4::part2(),
         (_, _) => Err(AdventError::NotImplemented(day, part)),
     }
 }

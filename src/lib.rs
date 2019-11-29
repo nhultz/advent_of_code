@@ -11,7 +11,8 @@ pub enum AdventError {
     NotImplemented(u32, u32),
     UnexpectedError(String),
     Io(std::io::Error),
-    Parse(std::num::ParseIntError),
+    IntParse(std::num::ParseIntError),
+    DateParse(chrono::format::ParseError),
 }
 
 impl fmt::Display for AdventError {
@@ -21,7 +22,8 @@ impl fmt::Display for AdventError {
             Self::NotImplemented(d, p) => write!(f, "Day: {}, Part: {} not implemented yet.", d, p),
             Self::UnexpectedError(ref s) => write!(f, "{}", s),
             Self::Io(ref e) => e.fmt(f),
-            Self::Parse(ref e) => e.fmt(f),
+            Self::IntParse(ref e) => e.fmt(f),
+            Self::DateParse(ref e) => e.fmt(f),
         }
     }
 }
@@ -33,7 +35,8 @@ impl error::Error for AdventError {
             Self::NotImplemented(_, _) => None,
             Self::UnexpectedError(_) => None,
             Self::Io(ref e) => Some(e),
-            Self::Parse(ref e) => Some(e),
+            Self::IntParse(ref e) => Some(e),
+            Self::DateParse(ref e) => Some(e),
         }
     }
 }
@@ -46,6 +49,12 @@ impl From<std::io::Error> for AdventError {
 
 impl From<std::num::ParseIntError> for AdventError {
     fn from(err: std::num::ParseIntError) -> Self {
-        AdventError::Parse(err)
+        AdventError::IntParse(err)
+    }
+}
+
+impl From<chrono::format::ParseError> for AdventError {
+    fn from(err: chrono::format::ParseError) -> Self {
+        AdventError::DateParse(err)
     }
 }
