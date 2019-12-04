@@ -2,7 +2,7 @@ use std::error;
 use std::fmt;
 
 pub mod solutions_2018;
-// pub mod solutions_2019;
+pub mod solutions_2019;
 
 pub type Result<T> = std::result::Result<T, AdventError>;
 

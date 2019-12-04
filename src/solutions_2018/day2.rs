@@ -7,7 +7,7 @@ use itertools::Itertools;
 use crate::{AdventError, Result};
 
 pub fn part1() -> Result<String> {
-    let file = File::open("data/day2_input.txt")?;
+    let file = File::open("data/2018/day2_input.txt")?;
     let reader = BufReader::new(file);
 
     let mut num_two = 0;
@@ -29,7 +29,7 @@ pub fn part1() -> Result<String> {
 }
 
 pub fn part2() -> Result<String> {
-    let file = File::open("data/day2_input.txt")?;
+    let file = File::open("data/2018/day2_input.txt")?;
     let reader = BufReader::new(file);
 
     let lines: Vec<String> = reader.lines().flat_map(|line| line).collect();

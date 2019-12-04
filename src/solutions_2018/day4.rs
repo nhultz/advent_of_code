@@ -111,7 +111,7 @@ impl Observation {
 // Helper Functions
 
 fn observations() -> Result<Vec<Observation>> {
-    let file = File::open("data/day4_input.txt")?;
+    let file = File::open("data/2018/day4_input.txt")?;
     let reader = BufReader::new(file);
 
     let mut records: Vec<Observation> = reader

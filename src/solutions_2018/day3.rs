@@ -101,7 +101,7 @@ pub fn part2() -> Result<String> {
 }
 
 fn claims() -> Result<Vec<Claim>> {
-    let file = File::open("data/day3_input.txt")?;
+    let file = File::open("data/2018/day3_input.txt")?;
     let reader = BufReader::new(file);
 
     return reader

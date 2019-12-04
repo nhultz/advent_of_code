@@ -5,7 +5,7 @@ use std::io::{BufRead, BufReader};
 use crate::Result;
 
 pub fn part1() -> Result<String> {
-    let file = File::open("data/day1_input.txt")?;
+    let file = File::open("data/2018/day1_input.txt")?;
     let reader = BufReader::new(file);
 
     let mut freq = 0;
@@ -19,7 +19,7 @@ pub fn part1() -> Result<String> {
 }
 
 pub fn part2() -> Result<String> {
-    let file = File::open("data/day1_input.txt")?;
+    let file = File::open("data/2018/day1_input.txt")?;
     let reader = BufReader::new(file);
 
     let mut freqs = HashSet::new();
