@@ -106,7 +106,7 @@ fn run(year: Option<&str>, day: Option<&str>, part: Option<&str>) -> Result<Stri
             (24, 2) => solutions_2018::day24::part2(),
             (25, 1) => solutions_2018::day25::part1(),
             (25, 2) => solutions_2018::day25::part2(),
-            (_, _) => Err(AdventError::NotImplemented(year, day, part)),
+            (_, _) => Err(AdventError::NotImplemented(year, day, part))?,
         },
         2019 => match (day, part) {
             (1, 1) => solutions_2019::day1::part1(),
@@ -159,8 +159,8 @@ fn run(year: Option<&str>, day: Option<&str>, part: Option<&str>) -> Result<Stri
             (24, 2) => solutions_2019::day24::part2(),
             (25, 1) => solutions_2019::day25::part1(),
             (25, 2) => solutions_2019::day25::part2(),
-            (_, _) => Err(AdventError::NotImplemented(year, day, part)),
+            (_, _) => Err(AdventError::NotImplemented(year, day, part))?,
         },
-        _ => Err(AdventError::NotImplemented(year, day, part)),
+        _ => Err(AdventError::NotImplemented(year, day, part))?,
     }
 }

@@ -2,9 +2,10 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
+use anyhow::Context;
 use chrono::{NaiveDate, NaiveDateTime, Timelike};
 
-use crate::{AdventError, Result};
+use crate::Result;
 
 pub fn part1() -> Result<String> {
     let obs = observations()?;
@@ -80,11 +81,11 @@ impl Observation {
     fn from(observation_str: String) -> Result<Self> {
         let left_bracket = observation_str
             .find("[")
-            .ok_or(AdventError::UnexpectedError("Missing left bracket".into()))?;
+            .with_context(|| "Missing left bracket")?;
 
         let right_bracket = observation_str
             .find("]")
-            .ok_or(AdventError::UnexpectedError("Missing right bracket".into()))?;
+            .with_context(|| "Missing right bracket")?;
 
         let timestamp = NaiveDateTime::parse_from_str(
             &observation_str[left_bracket + 1..right_bracket],

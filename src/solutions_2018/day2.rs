@@ -2,9 +2,10 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
+use anyhow::Context;
 use itertools::Itertools;
 
-use crate::{AdventError, Result};
+use crate::Result;
 
 pub fn part1() -> Result<String> {
     let file = File::open("data/2018/day2_input.txt")?;
@@ -40,9 +41,7 @@ pub fn part2() -> Result<String> {
         .cartesian_product(lines_clone.into_iter())
         .filter(|product| check_one_char_difference(&product.0, &product.1))
         .nth(1)
-        .ok_or(AdventError::UnexpectedError(
-            "No matching boxes found.".into(),
-        ))?;
+        .with_context(|| "No matching boxes found.")?;
 
     let mut answer = String::new();
     for (f, s) in correct_boxes.0.chars().zip(correct_boxes.1.chars()) {
