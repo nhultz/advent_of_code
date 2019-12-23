@@ -22,5 +22,10 @@ fn file_input(file_path: &str) -> Result<impl Iterator<Item = String>> {
     let file = File::open(file_path)?;
     let reader = BufReader::new(file);
 
-    Ok(reader.lines().flat_map(|line| line))
+    let it = reader
+        .lines()
+        .flat_map(|line| line)
+        .map(|line| line.trim().to_string());
+
+    Ok(it)
 }
