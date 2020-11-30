@@ -80,6 +80,6 @@ pub fn solve(day: u32, part: u32) -> Result<String> {
         (24, 2) => day24::part2(),
         (25, 1) => day25::part1(),
         (25, 2) => day25::part2(),
-        _ => Err(AdventError::NotImplemented(2018, day, part))?,
+        _ => Err(AdventError::NotImplemented(2020, day, part))?,
     }
 }

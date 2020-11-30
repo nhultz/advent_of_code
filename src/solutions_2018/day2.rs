@@ -1,21 +1,17 @@
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::{BufRead, BufReader};
 
 use anyhow::Context;
 use itertools::Itertools;
 
-use crate::Result;
+use crate::{file_input, Result};
 
 pub fn part1() -> Result<String> {
-    let file = File::open("data/2018/day2_input.txt")?;
-    let reader = BufReader::new(file);
+    let input = file_input("data/2018/day2_input.txt")?;
 
     let mut num_two = 0;
     let mut num_three = 0;
 
-    for line in reader.lines() {
-        let line = line?;
+    for line in input {
         if has_n_characters(2, &line) {
             num_two += 1;
         }
@@ -30,10 +26,9 @@ pub fn part1() -> Result<String> {
 }
 
 pub fn part2() -> Result<String> {
-    let file = File::open("data/2018/day2_input.txt")?;
-    let reader = BufReader::new(file);
+    let input = file_input("data/2018/day2_input.txt")?;
 
-    let lines: Vec<String> = reader.lines().flat_map(|line| line).collect();
+    let lines: Vec<String> = input.collect();
     let lines_clone = lines.clone();
 
     let correct_boxes = lines

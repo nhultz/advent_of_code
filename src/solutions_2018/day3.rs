@@ -1,53 +1,6 @@
 use std::collections::{HashMap, HashSet};
-use std::fs::File;
-use std::io::{BufRead, BufReader};
 
-use crate::Result;
-
-#[derive(Debug, Clone)]
-struct Claim {
-    id: u32,
-    left: u32,
-    top: u32,
-    width: u32,
-    height: u32,
-}
-
-impl Claim {
-    // Parse "#1 @ 185,501: 17x15" into a Claim
-    fn from(claim_str: String) -> Result<Self> {
-        let parts: Vec<&str> = claim_str.split_whitespace().collect();
-
-        let id: u32 = parts[0].replace("#", "").parse()?;
-
-        let position_parts: Vec<&str> = parts[2].split(",").collect();
-        let left: u32 = position_parts[0].parse()?;
-        let top: u32 = position_parts[1].replace(":", "").parse()?;
-
-        let size_parts: Vec<&str> = parts[3].split("x").collect();
-        let width: u32 = size_parts[0].parse()?;
-        let height: u32 = size_parts[1].parse()?;
-
-        Ok(Claim {
-            id,
-            left,
-            top,
-            width,
-            height,
-        })
-    }
-
-    fn points(&self) -> HashSet<(u32, u32)> {
-        let mut all_points = HashSet::new();
-
-        for x in 0..self.width {
-            for y in 0..self.height {
-                all_points.insert((self.left + x, self.top + y));
-            }
-        }
-        return all_points;
-    }
-}
+use crate::{file_input, Result};
 
 pub fn part1() -> Result<String> {
     let mut fabric_claims = HashMap::new();
@@ -101,14 +54,54 @@ pub fn part2() -> Result<String> {
 }
 
 fn claims() -> Result<Vec<Claim>> {
-    let file = File::open("data/2018/day3_input.txt")?;
-    let reader = BufReader::new(file);
-
-    return reader
-        .lines()
-        .flat_map(|line| line)
+    return file_input("data/2018/day3_input.txt")?
         .map(|line| Claim::from(line))
         .collect();
+}
+
+#[derive(Debug, Clone)]
+struct Claim {
+    id: u32,
+    left: u32,
+    top: u32,
+    width: u32,
+    height: u32,
+}
+
+impl Claim {
+    // Parse "#1 @ 185,501: 17x15" into a Claim
+    fn from(claim_str: String) -> Result<Self> {
+        let parts: Vec<&str> = claim_str.split_whitespace().collect();
+
+        let id: u32 = parts[0].replace("#", "").parse()?;
+
+        let position_parts: Vec<&str> = parts[2].split(",").collect();
+        let left: u32 = position_parts[0].parse()?;
+        let top: u32 = position_parts[1].replace(":", "").parse()?;
+
+        let size_parts: Vec<&str> = parts[3].split("x").collect();
+        let width: u32 = size_parts[0].parse()?;
+        let height: u32 = size_parts[1].parse()?;
+
+        Ok(Claim {
+            id,
+            left,
+            top,
+            width,
+            height,
+        })
+    }
+
+    fn points(&self) -> HashSet<(u32, u32)> {
+        let mut all_points = HashSet::new();
+
+        for x in 0..self.width {
+            for y in 0..self.height {
+                all_points.insert((self.left + x, self.top + y));
+            }
+        }
+        return all_points;
+    }
 }
 
 #[cfg(test)]

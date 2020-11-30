@@ -1,11 +1,9 @@
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::{BufRead, BufReader};
 
 use anyhow::Context;
 use chrono::{NaiveDate, NaiveDateTime, Timelike};
 
-use crate::Result;
+use crate::{file_input, Result};
 
 pub fn part1() -> Result<String> {
     let obs = observations()?;
@@ -112,12 +110,7 @@ impl Observation {
 // Helper Functions
 
 fn observations() -> Result<Vec<Observation>> {
-    let file = File::open("data/2018/day4_input.txt")?;
-    let reader = BufReader::new(file);
-
-    let mut records: Vec<Observation> = reader
-        .lines()
-        .flat_map(|line| line)
+    let mut records: Vec<Observation> = file_input("data/2018/day4_input.txt")?
         .map(|line| Observation::from(line))
         .flat_map(|line| line)
         .collect();
