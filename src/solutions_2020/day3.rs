@@ -9,10 +9,20 @@ pub fn part1() -> Result<String> {
 }
 
 pub fn part2() -> Result<String> {
-    Ok("part2".into())
+    let entries: Vec<String> = file_input("data/2020/day3_input.txt")?.collect();
+
+    // Possible slopes: (right, down)
+    let slopes = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)];
+
+    let answer: u64 = slopes
+        .iter()
+        .map(|slope| count_trees(&entries, slope.0, slope.1))
+        .product();
+
+    Ok(format!("{}", answer))
 }
 
-fn count_trees(map: &Vec<String>, right: usize, down: usize) -> u32 {
+fn count_trees(map: &Vec<String>, right: usize, down: usize) -> u64 {
     let mut num_trees = 0;
 
     let mut cur_x = 0;
