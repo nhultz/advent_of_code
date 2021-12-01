@@ -1,6 +1,6 @@
 use clap::{App, Arg};
 
-use advent_of_code_solutions::{solutions_2018, solutions_2019, solutions_2020};
+use advent_of_code_solutions::{solutions_2018, solutions_2019, solutions_2020, solutions_2021};
 use advent_of_code_solutions::{AdventError, Result};
 
 fn main() {
@@ -58,6 +58,7 @@ fn run(year: Option<&str>, day: Option<&str>, part: Option<&str>) -> Result<Stri
         2018 => solutions_2018::solve(day, part),
         2019 => solutions_2019::solve(day, part),
         2020 => solutions_2020::solve(day, part),
+        2021 => solutions_2021::solve(day, part),
         _ => Err(AdventError::NotImplemented(year, day, part))?,
     }
 }

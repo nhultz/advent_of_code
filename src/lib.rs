@@ -7,6 +7,7 @@ use thiserror::Error;
 pub mod solutions_2018;
 pub mod solutions_2019;
 pub mod solutions_2020;
+pub mod solutions_2021;
 
 pub type Result<T> = anyhow::Result<T>;
 
