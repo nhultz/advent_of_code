@@ -2,7 +2,7 @@ use crate::{AdventError, Result};
 
 mod day1;
 mod day2;
-// mod day3;
+mod day3;
 // mod day4;
 // mod day5;
 // mod day6;
@@ -34,8 +34,8 @@ pub fn solve(day: u32, part: u32) -> Result<String> {
         (1, 2) => day1::part2(),
         (2, 1) => day2::part1(),
         (2, 2) => day2::part2(),
-        // (3, 1) => day3::part1(),
-        // (3, 2) => day3::part2(),
+        (3, 1) => day3::part1(),
+        (3, 2) => day3::part2(),
         // (4, 1) => day4::part1(),
         // (4, 2) => day4::part2(),
         // (5, 1) => day5::part1(),
@@ -80,6 +80,6 @@ pub fn solve(day: u32, part: u32) -> Result<String> {
         // (24, 2) => day24::part2(),
         // (25, 1) => day25::part1(),
         // (25, 2) => day25::part2(),
-        _ => Err(AdventError::NotImplemented(2020, day, part))?,
+        _ => Err(AdventError::NotImplemented(2021, day, part))?,
     }
 }
