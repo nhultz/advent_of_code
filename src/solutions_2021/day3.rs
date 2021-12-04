@@ -19,28 +19,18 @@ where
     let size = bits[0].len();
 
     let mut gamma_bits = String::new();
-    let mut epsilon_bits = String::new();
-    let mut counter = 0;
 
     for i in 0..size {
-        for b in &bits {
-            let current_bit = &b[i..=i].parse::<u64>()?;
-            counter += current_bit;
+        let common_bit = most_common_bit_in_pos(&bits, i);
+        match common_bit {
+            CommonBit::One => gamma_bits.push_str("1"),
+            CommonBit::Zero => gamma_bits.push_str("0"),
+            _ => continue,
         }
-
-        if (counter * 2) as usize > bits.len() {
-            gamma_bits.push_str("1");
-            epsilon_bits.push_str("0");
-        } else {
-            gamma_bits.push_str("0");
-            epsilon_bits.push_str("1");
-        }
-
-        counter = 0;
     }
 
-    let gamma = i64::from_str_radix(&gamma_bits, 2)?;
-    let epsilon = i64::from_str_radix(&epsilon_bits, 2)?;
+    let gamma = u64::from_str_radix(&gamma_bits, 2)?;
+    let epsilon = u64::from_str_radix(&flip_bits(&gamma_bits), 2)?;
 
     Ok(format!("{}", gamma * epsilon))
 }
@@ -93,6 +83,16 @@ where
     let co2_rating = i64::from_str_radix(&co2_bits[0], 2)?;
 
     Ok(format!("{}", oxy_rating * co2_rating))
+}
+
+fn flip_bits(s: &str) -> String {
+    s.chars()
+        .map(|c| match c {
+            '1' => "0",
+            '0' => "1",
+            _ => "",
+        })
+        .collect()
 }
 
 enum CommonBit {

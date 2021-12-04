@@ -5,8 +5,9 @@ authors = ["Nick Hultz <nhultz328@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-clap = "2.33.3"
-itertools = "0.10.1"
-chrono = "0.4.19"
-anyhow = "1.0.44"
-thiserror = "1.0.30"
+clap = "2.33"
+itertools = "0.10"
+chrono = "0.4"
+anyhow = "1.0"
+thiserror = "1.0"
+lazy_static = "1.4"
