@@ -138,8 +138,11 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_parsing_points() {
-        assert_eq!(point_tuple("35,336"), Ok(("", Point { x: 35, y: 336 })));
+    fn test_parsing_points() -> Result<()> {
+        let res = input_line("949,41 -> 13,977")?;
+        assert_eq!(res, (Point { x: 949, y: 41 }, Point { x: 13, y: 977 }));
+
+        Ok(())
     }
 
     #[test]
@@ -184,11 +187,6 @@ mod tests {
 
         Ok(())
     }
-
-    // #[test]
-    // fn test_diag_line() -> Result<()> {
-    //     Ok(())
-    // }
 
     #[test]
     fn test_input_part1() -> Result<()> {
