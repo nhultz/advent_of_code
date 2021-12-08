@@ -1,5 +1,4 @@
 use crate::{file_input, Result};
-use std::collections::HashMap;
 
 pub fn part1() -> Result<String> {
     let input = file_input("data/2021/day6_input.txt")?;
@@ -55,43 +54,37 @@ where
 
 #[derive(Debug)]
 struct Population {
-    pop_counts: HashMap<u8, u64>,
+    pop_counts: [u64; 9],
 }
 
 impl Population {
     fn new(initial_pop: Vec<u8>) -> Self {
-        let mut counter: HashMap<u8, u64> = HashMap::default();
+        let mut pop_counts = [0; 9];
+
         for f in initial_pop {
-            let count = counter.entry(f).or_insert(0);
-            *count += 1;
+            pop_counts[f as usize] += 1;
         }
 
-        Population {
-            pop_counts: counter,
-        }
+        Population { pop_counts }
     }
 
     fn size(&self) -> u64 {
-        self.pop_counts.values().sum()
+        self.pop_counts.iter().sum()
     }
 
     fn next_generation(&mut self) {
-        let mut counter: HashMap<u8, u64> = HashMap::default();
+        let mut new_counts = [0; 9];
 
-        for (k, count) in &self.pop_counts {
-            if *k == 0 {
-                let cur_6 = counter.entry(6).or_insert(0);
-                *cur_6 += *count;
-
-                let cur_8 = counter.entry(8).or_insert(0);
-                *cur_8 += *count;
+        for i in 0..=8 {
+            if i == 0 {
+                new_counts[6] = new_counts[6] + self.pop_counts[i];
+                new_counts[8] = new_counts[8] + self.pop_counts[i];
             } else {
-                let cur_k = counter.entry(k - 1).or_insert(0);
-                *cur_k += *count;
+                new_counts[i - 1] = new_counts[i - 1] + self.pop_counts[i];
             }
         }
 
-        self.pop_counts = counter;
+        self.pop_counts = new_counts;
     }
 }
 

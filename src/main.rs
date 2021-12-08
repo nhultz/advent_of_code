@@ -1,6 +1,8 @@
 use clap::{App, Arg};
 
-use advent_of_code_solutions::{solutions_2018, solutions_2019, solutions_2020, solutions_2021};
+use advent_of_code_solutions::{
+    solutions_2015, solutions_2018, solutions_2019, solutions_2020, solutions_2021,
+};
 use advent_of_code_solutions::{AdventError, Result, SolveResult};
 
 fn main() -> Result<()> {
@@ -55,6 +57,7 @@ fn run(year: u32, day: Option<&str>, part: Option<&str>) -> Result<Vec<SolveResu
 
     let solve_results = match (year, day, part) {
         (y, None, None) => match y {
+            2015 => solutions_2015::solve_all(),
             2018 => solutions_2018::solve_all(),
             2019 => solutions_2019::solve_all(),
             2020 => solutions_2020::solve_all(),
@@ -62,6 +65,7 @@ fn run(year: u32, day: Option<&str>, part: Option<&str>) -> Result<Vec<SolveResu
             _ => return Err(AdventError::NotImplementedYear(year))?,
         },
         (y, Some(d), None) => match (y, d) {
+            (2015, d) => solutions_2015::solve_day(d),
             (2018, d) => solutions_2018::solve_day(d),
             (2019, d) => solutions_2019::solve_day(d),
             (2020, d) => solutions_2020::solve_day(d),
@@ -69,6 +73,7 @@ fn run(year: u32, day: Option<&str>, part: Option<&str>) -> Result<Vec<SolveResu
             _ => return Err(AdventError::NotImplementedDay(year, d))?,
         },
         (y, Some(d), Some(p)) => match (y, d, p) {
+            (2015, d, p) => vec![solutions_2015::solve_part(d, p)],
             (2018, d, p) => vec![solutions_2018::solve_part(d, p)],
             (2019, d, p) => vec![solutions_2019::solve_part(d, p)],
             (2020, d, p) => vec![solutions_2020::solve_part(d, p)],

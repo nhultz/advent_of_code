@@ -5,6 +5,7 @@ use std::io::{BufRead, BufReader};
 use anyhow;
 use thiserror::Error;
 
+pub mod solutions_2015;
 pub mod solutions_2018;
 pub mod solutions_2019;
 pub mod solutions_2020;
