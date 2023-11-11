@@ -1,0 +1,3 @@
+[workspace]
+members = ["aoc_derive", "aoc_types", "solutions"]
+resolver = "2"

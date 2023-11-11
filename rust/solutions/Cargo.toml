@@ -1,0 +1,16 @@
+[package]
+name = "solutions"
+version = "0.1.0"
+authors = ["Nick Hultz <nhultz328@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+aoc_derive = { path = "../aoc_derive" }
+aoc_types = { path = "../aoc_types" }
+clap = "2.33"
+itertools = "0.10"
+chrono = "0.4"
+chrono-tz = "0.6"
+nom = "7.1"
+ureq = { version = "2.3", features = ["cookies"] }
+toml = "0.5"

@@ -1,0 +1,14 @@
+[package]
+name = "aoc_derive"
+version = "0.1.0"
+authors = ["Nick Hultz <nhultz328@gmail.com>"]
+edition = "2021"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+aoc_types = { path = "../aoc_types" }
+proc-macro2 = "1.0"
+quote = "1.0"
+syn = { version = "1.0", features = ["full"] }
