@@ -1,5 +1,5 @@
 use crate::helpers::{AocDate, CredentialsManager, DateManager};
-use crate::{year2015, year2021};
+use crate::{year2015, year2021, year2023};
 use aoc_types::{Day, Part};
 use std::error;
 use std::fs::{self, File};
@@ -94,6 +94,7 @@ impl AocApp {
         match date_mgr.current_year {
             2015 => year2015::__aoc::run_problem(day),
             2021 => year2021::__aoc::run_problem(day),
+            2023 => year2023::__aoc::run_problem(day),
             n => return Err(format!("{} not implemented yet.", n).into()),
         }
 

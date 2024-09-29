@@ -4,6 +4,7 @@ mod app;
 mod helpers;
 mod year2015;
 mod year2021;
+mod year2023;
 
 fn main() {
     let matches = App::new("AdventOfCode")
