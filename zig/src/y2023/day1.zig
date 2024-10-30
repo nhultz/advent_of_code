@@ -1,6 +1,6 @@
 const std = @import("std");
 
-const numberConversion = std.ComptimeStringMap(u32, .{
+const numberConversion = std.StaticStringMap(u32).initComptime(.{
     .{ "0", 0 },
     .{ "1", 1 },
     .{ "2", 2 },
@@ -27,9 +27,9 @@ pub fn run(input: []const u8) !void {
     const answer_part1: u64 = try part1(input);
     const answer_part2: u64 = try part2(input);
 
-    std.debug.print("Day 1\n", .{});
-    std.debug.print("  Part 1: {}\n", .{answer_part1});
-    std.debug.print("  Part 2: {}\n\n", .{answer_part2});
+    std.log.info("Day 1", .{});
+    std.log.info("  Part 1: {}", .{answer_part1});
+    std.log.info("  Part 2: {}\n", .{answer_part2});
 }
 
 fn part1(input: []const u8) !u64 {
@@ -69,9 +69,9 @@ fn part2(input: []const u8) !u64 {
         var i: usize = 0;
         var first_digit: u32 = undefined;
         search_loop: while (i < line.len) : (i += 1) {
-            for (numberConversion.kvs) |kv| {
-                if (std.mem.startsWith(u8, line[i..line.len], kv.key)) {
-                    first_digit = numberConversion.get(kv.key).?;
+            for (numberConversion.keys()) |key| {
+                if (std.mem.startsWith(u8, line[i..line.len], key)) {
+                    first_digit = numberConversion.get(key).?;
                     break :search_loop;
                 }
             }
@@ -80,9 +80,9 @@ fn part2(input: []const u8) !u64 {
         var j: usize = line.len;
         var second_digit: u32 = undefined;
         search_loop: while (j > 0) : (j -= 1) {
-            for (numberConversion.kvs) |kv| {
-                if (std.mem.endsWith(u8, line[0..j], kv.key)) {
-                    second_digit = numberConversion.get(kv.key).?;
+            for (numberConversion.keys()) |key| {
+                if (std.mem.endsWith(u8, line[0..j], key)) {
+                    second_digit = numberConversion.get(key).?;
                     break :search_loop;
                 }
             }
