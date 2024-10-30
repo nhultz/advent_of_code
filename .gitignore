@@ -5,4 +5,5 @@
 target
 credentials.toml
 
-zig-cache
+.zig-cache
+zig-out
