@@ -29,7 +29,7 @@ pub fn run(input: []const u8) !void {
 
     std.log.info("Day 1", .{});
     std.log.info("  Part 1: {}", .{answer_part1});
-    std.log.info("  Part 2: {}\n", .{answer_part2});
+    std.log.info("  Part 2: {}", .{answer_part2});
 }
 
 fn part1(input: []const u8) !u64 {

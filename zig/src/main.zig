@@ -1,7 +1,7 @@
 const std = @import("std");
 
-const aoc = @import("root.zig");
-const cli = @import("zig-cli");
+const aoc = @import("aoc");
+const cli = @import("cli");
 
 var config = struct {
     year: u16 = undefined,
@@ -9,11 +9,11 @@ var config = struct {
 }{};
 
 pub fn main() !void {
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    defer _ = gpa.deinit();
-    const alloc = gpa.allocator();
+    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+    defer arena.deinit();
+    const allocator = arena.allocator();
 
-    var r = try cli.AppRunner.init(alloc);
+    var r = try cli.AppRunner.init(allocator);
 
     const app = cli.App{
         .command = cli.Command{
